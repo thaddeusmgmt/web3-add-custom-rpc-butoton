@@ -12,8 +12,6 @@
     window.ethereum.request({ method: 'eth_requestAccounts' }).then(() => {
       // Get the user's current network
       window.ethereum.send({ method: 'eth_chainId' }).then((chainId) => {
-        // Check if the user is on the main Ethereum network
-        if (chainId === '0x1') {
           // Add the custom network to MetaMask
           window.ethereum.send({
             method: 'metamask_addCustomNetwork',
