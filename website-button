@@ -1,0 +1,32 @@
+<button onclick="addCustomNetwork()">Add Custom Network</button>
+
+<script>
+  function addCustomNetwork() {
+    // Check if the user has MetaMask installed
+    if (typeof window.ethereum === 'undefined') {
+      alert('Please install MetaMask to add a custom network');
+      return;
+    }
+
+    // Request access to the user's accounts
+    window.ethereum.request({ method: 'eth_requestAccounts' }).then(() => {
+      // Get the user's current network
+      window.ethereum.send({ method: 'eth_chainId' }).then((chainId) => {
+        // Check if the user is on the main Ethereum network
+        if (chainId === '0x1') {
+          // Add the custom network to MetaMask
+          window.ethereum.send({
+            method: 'metamask_addCustomNetwork',
+            params: [{
+              chainId: 1234, // Replace with the ID of your custom network
+              name: 'My Custom Network', // Replace with the name of your custom network
+              rpcUrl: 'https://mycustomnetwork.com/rpc' // Replace with the RPC URL of your custom network
+            }]
+          });
+        } else {
+          alert('Please switch to the main Ethereum network to add a custom network');
+        }
+      });
+    });
+  }
+</script>
